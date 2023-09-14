@@ -16,6 +16,8 @@
 
 ## HTML
 
+- Make file 2048.html in your prefered IDE. 
+
 The basic syntax of HTML should be written.
 
 ```
@@ -30,6 +32,7 @@ The basic syntax of HTML should be written.
     
 </body>
 </html>
+
 ```
 
 Add the CSS link and the JS link that will be used in the project in the <head> tag. 
@@ -61,8 +64,11 @@ In the next line the score is displayed in a h2 tag, span is used so that the va
 <h2>Score - <span id="score">0</span></h2>
 ```
 
-Create a div called boards and create another div named tiles inside this div.
+- <div id="board">: This is the main container for the game board. It represents the grid where the game tiles will be placed and moved.
 
+- <div class="icon">: Inside the game board container, there is a nested <div> element with the class "icon." This is used to style or position the game tiles within the grid.
+
+- <tile class="2">: This line represents the initial game tile with a value of 2.
 ```
  <!-- Game Board Container -->
     <div id="board">
@@ -71,9 +77,6 @@ Create a div called boards and create another div named tiles inside this div.
             <!-- Game Tile (initially with a value of 2) -->
             <tile class="2"></tile>
         </div>
-        <!-- More tiles would be added dynamically within this container during gameplay -->
+        <!-- More tiles would be added dynamically within this container during gameplay using js -->
     </div>
     ```
-
-
-
