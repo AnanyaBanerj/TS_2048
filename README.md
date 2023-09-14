@@ -43,19 +43,19 @@ Add the CSS link and the JS link that will be used in the project in the <head> 
 <script src="2048.js"></script>
 ```
 
-In the body tag, use <h1> to display the title "2048" at the top of the game interface.
+In the body tag, use h1 to display the title "2048" at the top of the game interface.
 
 ```
 <h1>2048</h1>
 ```
-Use <hr> for a horizontal rule or line.
+Use hr for a horizontal rule or line.
 It is used to visually separate content on the webpage. In this context, it might be used to separate the title from the game board.
 
 ```
 <hr>
 ```
 
-In the next line the score is displayed in a <h2> tag, <span> is used so that the value of the score can be updated in JavaScript. 
+In the next line the score is displayed in a h2 tag, span is used so that the value of the score can be updated in JavaScript. 
 
 ```
 <h2>Score - <span id="score">0</span></h2>
@@ -74,4 +74,6 @@ Create a div called boards and create another div named tiles inside this div.
         <!-- More tiles would be added dynamically within this container during gameplay -->
     </div>
     ```
+
+
 
