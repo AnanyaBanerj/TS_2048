@@ -79,5 +79,146 @@ In the next line the score is displayed in a h2 tag, span is used so that the va
         </div>
         <!-- More tiles would be added dynamically within this container during gameplay using js -->
     </div>
-    ```
+
+   ```
+
+## CSS
+
+- Make a CSS file and name it style.css.
+
+
+Make the text inside the body element of the specified font stack (Arial, Helvetica, or a generic sans-serif font) and center-align the text within the body.
+
+```
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+}
+```
+
+Set the width of the horizontal rule (hr) to 500px.
+
+```
+hr {
+    width: 500px;
+}
+```
+Now we create the styling for the board element.
+- Sets the width and height of the "board" element to 400 pixels by 400 pixels, making it a square.
+
+- Sets the background color of the "board" element to a light grayish-brown color with the hexadecimal code #cdc1b5.
+
+- Adds a border to the "board" element. It's a solid border with a width of 9 pixels and a color of #bbada0, which is a slightly darker shade of grayish-brown.
+
+- Using the "margin: 0 auto", **CENTERS** the div its container by setting the left and right margins to auto.
+
+- flex-wrap: wrap;: Make the display a flexbox by making the display, flex. Use flex wrap, to wrap onto multiple lines if they exceed the available space horizontally.
+
+```
+#board {
+    width: 400px;
+    height: 400px;
+
+    background-color: #cdc1b5;
+    border: 9px solid #bbada0;
+
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+```
+
+The next block of code describes the styling for the tiles inside the board.
+
+- Sets the width and height of "tile" elements to 90 pixels, creating a square shape.
+
+- Add a solid border of width 5 pixels and the color - #bbada0.
+
+- Sets the font size to 40 pixels and makes the text inside the "tile" elements bold using font-weight.
+
+- the last 3 lines of code center the child elements both horizontally and vertically within a flex container.
+
+```
+.tile {
+    width: 90px;
+    height: 90px;
+    border: 5px solid #bbada0;
+
+    font-size: 40px;
+    font-weight: bold;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+```
+
+The next set of codes specifies a background color and text color for every tile with a specific value. The colors can be modified according to personal preference but given are the standard ones. 
+
+```
+.x2 {
+    background-color: #eee4da;
+    color: #727371;
+}
+
+.x4 {
+    background-color: #ece0ca;
+    color: #727371;
+}
+
+.x8 {
+    background-color: #f4b17a;
+    color: white;
+}
+
+.x16{
+    background-color: #f59575;
+    color: white;
+}
+
+.x32{
+    background-color: #f57c5f;
+    color: white;
+}
+
+.x64{
+    background-color: #f65d3b;
+    color: white;
+}
+
+.x128{
+    background-color: #edce71;
+    color: white;
+}
+
+.x256{
+    background-color: #edcc63;
+    color: white;
+}
+
+.x512{
+    background-color: #edc651;
+    color: white;
+}
+
+.x1024{
+    background-color: #eec744;
+    color: white;
+}
+
+.x2048{
+    background-color: #ecc230;
+    color: white;
+}
+
+.x4096 {
+    background-color: #fe3d3d;
+    color: white;
+}
+
+.x8192 {
+    background-color: #ff2020;
+    color: white;
+}
+```
+
 
