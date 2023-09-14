@@ -35,7 +35,7 @@ The basic syntax of HTML should be written.
 
 ```
 
-Add the CSS link and the JS link that will be used in the project in the <head> tag. 
+Add the CSS link and the JS link that will be used in the project in the head tag. 
 
 **CSS**
 ```
