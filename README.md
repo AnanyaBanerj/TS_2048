@@ -220,5 +220,117 @@ The next set of codes specifies a background color and text color for every tile
     color: white;
 }
 ```
+## JS 
 
+Create a file 2048.js, this will allow you to create a dynamic and interactive web page to execute complex actions.
+
+#### Variable Declarations:
+
+
+```
+var board;
+var score = 0;
+var rows = 4;
+var columns = 4;
+```
+
+
+**Window.onload** sets up an event handler that triggers the setGame() function when the web page has fully loaded. The setGame() function will be elaborated later. 
+```
+window.onload = function() {
+    setGame();
+}
+```
+#### setGame() Function:
+
+This function initializes the game by:
+- Creats an empty game board represented as a 4x4 grid with all values initially set to 0.
+- Creating HTML div elements to visually represent each tile on the game board.
+- Adding the tiles to the HTML document within an element with the ID "board."
+Calling setTwo() twice to add two "2" tiles to random empty positions on the board.
+```
+function setGame() {
+   
+
+    board = [
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0],
+        [0, 0, 0, 0]
+    ]
+
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < columns; c++) {
+            let tile = document.createElement("div");
+            tile.id = r.toString() + "-" + c.toString();
+            let num = board[r][c];
+            updateTile(tile, num);
+            document.getElementById("board").append(tile);
+        }
+    }
+  
+    setTwo();
+    setTwo();
+
+}
+```
+
+**updateTile Function:**
+The `updateTile` function is responsible for updating the appearance of a game tile based on its numeric value. Here's a breakdown of what this function does:
+
+- `tile.innerText = "";`: Clears the text content of the tile, ensuring that it's initially empty.
+
+- Clear all the CSS classes applied to the tile using `tile.classList.value = ""; `. Then add the class tile to the tile element. 
+
+- `tile.classList.add("tile");`: Adds the class "tile" to the tile element. This class typically defines the default styling for game tiles.
+
+- `if (num > 0) { ... }`: This conditional block checks if the provided `num` (the numeric value of the tile) is greater than 0. `tile.innerText = num.toString();` is used to update the string representation to `num`
+
+- `if (num <= 4096) { ... }`: This conditional block checks if `num` is less than or equal to 4096.
+
+   - If `num` is less than or equal to 4096, it adds a class in the format "x[num]" to the tile. Else it adds the class x8192 to the tile, which is the highest possible value. 
+
+```
+function updateTile(tile, num) {
+    tile.innerText = "";
+    tile.classList.value = ""; 
+    tile.classList.add("tile");
+    if (num > 0) {
+        tile.innerText = num.toString();
+        if (num <= 4096) {
+            tile.classList.add("x"+num.toString());
+        } else {
+            tile.classList.add("x8192");
+        }                
+    }
+}
+```
+**Keyboard Event Listener**
+Add an event listener to the document for the "keyup" event, which fires when a keyboard key is released. 
+Inside the event listener, it checks which arrow key was released using e.code:
+- `if (e.code == "ArrowLeft") { ... }:` Release the left arrow key, it calls the slideLeft() function to slide the tiles to the left and merges them , and then calls setTwo() to add a new "2" tile to the board.
+The same thing is done for Arrowright, Arrowup and ArrowDown. 
+- After handling the tile movement based on the arrow key press, it updates the score displayed on the web page using `document.getElementById("score").innerText = score;`
+```
+document.addEventListener('keyup', (e) => {
+    if (e.code == "ArrowLeft") {
+        slideLeft();
+        setTwo();
+    }
+    else if (e.code == "ArrowRight") {
+        slideRight();
+        setTwo();
+    }
+    else if (e.code == "ArrowUp") {
+        slideUp();
+        setTwo();
+
+    }
+    else if (e.code == "ArrowDown") {
+        slideDown();
+        setTwo();
+    }
+    document.getElementById("score").innerText = score;
+})
+```
 
