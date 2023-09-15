@@ -244,7 +244,7 @@ window.onload = function() {
 #### setGame() Function:
 
 This function initializes the game by:
-- Creats an empty game board represented as a 4x4 grid with all values initially set to 0.
+- Creates an empty game board represented as a 4x4 grid with all values initially set to 0.
 - Creating HTML div elements to visually represent each tile on the game board.
 - Adding the tiles to the HTML document within an element with the ID "board."
 Calling setTwo() twice to add two "2" tiles to random empty positions on the board.
@@ -288,7 +288,7 @@ The `updateTile` function is responsible for updating the appearance of a game t
 
 - `if (num <= 4096) { ... }`: This conditional block checks if `num` is less than or equal to 4096.
 
-   - If `num` is less than or equal to 4096, it adds a class in the format "x[num]" to the tile. Else it adds the class x8192 to the tile, which is the highest possible value. 
+   - If `num` is less than or equal to 4096, it adds a class in the format "x[num]" to the tile. Otherwise, it adds the class x8192 to the tile, which is the highest possible value. 
 
 ```
 function updateTile(tile, num) {
@@ -308,8 +308,8 @@ function updateTile(tile, num) {
 **Keyboard Event Listener**
 Add an event listener to the document for the "keyup" event, which fires when a keyboard key is released. 
 Inside the event listener, it checks which arrow key was released using e.code:
-- `if (e.code == "ArrowLeft") { ... }:` Release the left arrow key, it calls the slideLeft() function to slide the tiles to the left and merges them , and then calls setTwo() to add a new "2" tile to the board.
-The same thing is done for Arrowright, Arrowup and ArrowDown. 
+- `if (e.code == "ArrowLeft") { ... }:` Release the left arrow key, it calls the slideLeft() function to slide the tiles to the left and merges them, and then calls setTwo() to add a new "2" tile to the board.
+The same thing is done for Arrowright, Arrowup, and ArrowDown. 
 - After handling the tile movement based on the arrow key press, it updates the score displayed on the web page using `document.getElementById("score").innerText = score;`
 ```
 document.addEventListener('keyup', (e) => {
@@ -333,4 +333,77 @@ document.addEventListener('keyup', (e) => {
     document.getElementById("score").innerText = score;
 })
 ```
+Return a new array with all zero values removed from the input array row using the filterZero function. 
+``` 
+function filterZero(row){
+    return row.filter(num => num != 0); 
+}
+```
+**Slide function** 
+
+Make a loop to iterate through each element of the row, then start an if condition to check if any of the adjacent tiles are equal. If its equal it can be merged. 
+
+Inside the if block:
+
+- `row[i] *= 2;`: It doubles the value of the current tile, effectively merging it with the next tile.
+- `row[i + 1] = 0;`: It sets the value of the next tile to 0 to mark it as merged.
+- `score += row[i];`: It updates the game's score by adding the merged tile's value to the score.
+- `while (row.length < columns) { ... }`: This loop ensures that the row has the same length as the number of columns. .
+
+Finally, the modified row is returned from the function, representing the result of sliding and merging in that row.
+```
+
+function slide(row) {
+    row = filterZero(row); // Step 1: Remove zeros from the row
+    for (let i = 0; i < row.length - 1; i++) {
+        if (row[i] == row[i + 1]) {
+            // Step 2: Merge adjacent tiles with the same value
+            row[i] *= 2;
+            row[i + 1] = 0;
+            score += row[i]; // Update the game score
+        }
+    }
+    row = filterZero(row); // Step 3: Remove any zeros created during merging
+    while (row.length < columns) {
+        // Step 4: Ensure the row has the same length as the number of columns
+        row.push(0);
+    }
+    return row; // Return the modified row after sliding and merging
+}
+```
+
+**Slide Functions**
+1. slideLeft functions - 
+The `slideLeft` function is responsible for sliding and merging tiles to the left within each row of the game board. 
+
+slideLeft functions - 
+- `for (let r = 0; r < rows; r++) { ... }`: This outer loop iterates through each row of the game board, inside the loop, it retrieves the current row from the game board and stores it in the `row` variable.
+
+- `row = slide(row);`: It calls the `slide` function to slide and merge the tiles in the `row`. 
+
+- Another nested loop, `for (let c = 0; c < columns; c++) { ... }`, iterates through each column within the row.
+
+- `let tile = document.getElementById(r.toString() + "-" + c.toString());`: It retrieves the tile element in the HTML corresponding to the current position `(r, c)` on the game board. This is done using the `getElementById` method, where `r` and `c` are converted to strings and combined to form the tile's unique ID.
+
+- Then call the `updateTile` function to visually update the tile on the web page with its new value and styling based on `num`.
+
+
+```
+function slideLeft() {
+    for (let r = 0; r < rows; r++) {
+        let row = board[r]; // Get the current row from the game board
+        row = slide(row); // Slide and merge the tiles in the row
+        board[r] = row; // Update the game board with the modified row
+        for (let c = 0; c < columns; c++) {
+            let tile = document.getElementById(r.toString() + "-" + c.toString());
+            let num = board[r][c];
+            updateTile(tile, num); // Update the visual representation of the tiles on the web page
+        }
+    }
+}
+```
+
+The exact same thing should be done with the slideRight except using the line `row.reverse();` in the code. It is used to reverse the order of elements in the row array.
+
+
 
