@@ -372,7 +372,6 @@ function slide(row) {
 }
 ```
 
-**Slide Functions**
 1. slideLeft functions - 
 The `slideLeft` function is responsible for sliding and merging tiles to the left within each row of the game board. 
 
@@ -404,6 +403,86 @@ function slideLeft() {
 ```
 
 The exact same thing should be done with the slideRight except using the line `row.reverse();` in the code. It is used to reverse the order of elements in the row array.
+
+2. slideUp function
+
+
+Here's a step-by-step explanation of what each part of the slideUp function does:
+
+- `for (let c = 0; c < columns; c++) { ... }`: This outer loop iterates through each column of the game board, from left to right.
+
+- `let row = [board[0][c], board[1][c], board[2][c], board[3][c]];`: Inside the loop, it creates an array row representing the current column by selecting the corresponding elements from each row of the game board. 
+
+- `row = slide(row);`: It calls the `slide` function to slide and merge the tiles in the `row`.
+
+- Inside the nested loop, `for (let r = 0; r < rows; r++) { ... }`, it iterates through each row within the column.
+
+- `board[r][c] = row[r];`: After sliding and merging, it updates the game board with the modified column.
+
+- Retrieve the tile element in the HTML corresponding to the current position (r, c) using `let tile = document.getElementById(r.toString() + "-" + c.toString());`
+```javascript
+function slideUp() {
+    for (let c = 0; c < columns; c++) {
+        let row = [board[0][c], board[1][c], board[2][c], board[3][c]];
+        row = slide(row);
+        for (let r = 0; r < rows; r++){
+            board[r][c] = row[r];
+            let tile = document.getElementById(r.toString() + "-" + c.toString());
+            let num = board[r][c];
+            updateTile(tile, num);
+        }
+    }
+}
+```
+The exact same thing should be done with the `slideDown` except using the line `row.reverse();` in the code. It is used to reverse the order of elements in the row array.
+
+**function setTwo()**
+
+The setTwo function is responsible for adding a new "2" tile to a random empty cell on the game board. 
+
+- Check if the tile is empty(has a 0) using a `for` loop. 
+- Generate a random row index and a random column index using `let r = Math.floor(Math.random() * rows);` and `let c = Math.floor(Math.random() * columns);.`
+- Update the visual representation of the tile to `2x`.
+
+```
+function setTwo() {
+    if (!hasEmptyTile()) {
+        return;
+    }
+    let found = false;
+    while (!found) {
+        let r = Math.floor(Math.random() * rows);
+        let c = Math.floor(Math.random() * columns);
+        if (board[r][c] == 0) {
+            board[r][c] = 2;
+            let tile = document.getElementById(r.toString() + "-" + c.toString());
+            tile.innerText = "2";
+            tile.classList.add("x2");
+            found = true;
+        }
+    }
+}
+```
+**hasEmptyTile**
+Responsible for checking whether there are any empty cells (tiles with a value of 0) left on the game board.
+- Count is initialized to 0.
+- Use two nested loops to iterate through each cell of the game board, first one for row and another for column.
+- If an empty cell is found (i.e., `board[r][c] == 0` is true), the function immediately returns `true`. This means that the game board contains at least one empty cell. Else, it returns `false`, hence the game is over. 
+```
+function hasEmptyTile() {
+    let count = 0; // Initialize a counter to keep track of empty cells
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < columns; c++) {
+            if (board[r][c] == 0) { 
+                return true; // If an empty cell is found, return true immediately
+            }
+        }
+    }
+    return false; // If no empty cell is found after checking the entire board, return false
+}
+```
+
+This function is essential for ensuring that the game doesn't continue to add tiles when there's no more space available.
 
 
 
