@@ -3,10 +3,10 @@ var score = 0;
 var rows = 4;
 var columns = 4;
 
-window.onload = function() {
+window.onload = function () {
     setGame();
-}
-
+    loadGame(); // Load the saved game state
+};
 function setGame() {
    
 
@@ -97,6 +97,7 @@ function slideLeft() {
             let tile = document.getElementById(r.toString() + "-" + c.toString());
             let num = board[r][c];
             updateTile(tile, num);
+            updateGameState();
         }
     }
 }
@@ -111,6 +112,7 @@ function slideRight() {
             let tile = document.getElementById(r.toString() + "-" + c.toString());
             let num = board[r][c];
             updateTile(tile, num);
+            updateGameState();
         }
     }
 }
@@ -124,6 +126,7 @@ function slideUp() {
             let tile = document.getElementById(r.toString() + "-" + c.toString());
             let num = board[r][c];
             updateTile(tile, num);
+            updateGameState();
         }
     }
 }
@@ -139,6 +142,7 @@ function slideDown() {
             let tile = document.getElementById(r.toString() + "-" + c.toString());
             let num = board[r][c];
             updateTile(tile, num);
+            updateGameState();
         }
     }
 }
@@ -159,6 +163,7 @@ function setTwo() {
             found = true;
         }
     }
+    updateGameState();
 }
 
 function hasEmptyTile() {
@@ -173,3 +178,145 @@ function hasEmptyTile() {
     return false;
 }
 
+var board;
+var score = 0;
+var rows = 4;
+var columns = 4;
+
+window.onload = function () {
+    setGame();
+    // Load the game state from localStorage
+    loadGame();
+};
+
+function setGame() {
+    board = JSON.parse(localStorage.getItem('board')) || getDefaultBoard();
+
+    for (let r = 0; r < rows; r++) {
+        for (let c = 0; c < columns; c++) {
+            let tile = document.createElement("div");
+            tile.id = r.toString() + "-" + c.toString();
+            let num = board[r][c];
+            updateTile(tile, num);
+            document.getElementById("board").append(tile);
+        }
+    }
+
+    document.getElementById("score").innerText = score;
+}
+
+// Save the game state to localStorage
+function saveGame() {
+    localStorage.setItem('board', JSON.stringify(board));
+    localStorage.setItem('score', score);
+}
+
+// Load the game state from localStorage
+function loadGame() {
+    if (localStorage.getItem('board')) {
+        board = JSON.parse(localStorage.getItem('board'));
+        score = parseInt(localStorage.getItem('score'));
+        for (let r = 0; r < rows; r++) {
+            for (let c = 0; c < columns; c++) {
+                let tile = document.getElementById(r.toString() + "-" + c.toString());
+                let num = board[r][c];
+                updateTile(tile, num);
+            }
+        }
+        document.getElementById("score").innerText = score;
+    }
+}
+
+// Call this function whenever the game state changes (e.g., after a move)
+function updateGameState() {
+    saveGame();
+
+}
+
+
+
+var board;
+        var score = 0;
+        var rows = 4;
+        var columns = 4;
+
+        window.onload = function () {
+            setGame();
+            // Load the game state from localStorage
+            loadGame();
+
+            // Add an event listener to the restart button
+            document.getElementById("restartButton").addEventListener("click", resetGame);
+        };
+
+        function setGame() {
+            board = JSON.parse(localStorage.getItem('board')) || getDefaultBoard();
+
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < columns; c++) {
+                    let tile = document.createElement("div");
+                    tile.id = r.toString() + "-" + c.toString();
+                    let num = board[r][c];
+                    updateTile(tile, num);
+                    document.getElementById("board").append(tile);
+                }
+            }
+
+            document.getElementById("score").innerText = score;
+        }
+
+        // Save the game state to localStorage
+        function saveGame() {
+            localStorage.setItem('board', JSON.stringify(board));
+            localStorage.setItem('score', score);
+        }
+
+        // Load the game state from localStorage
+        function loadGame() {
+            if (localStorage.getItem('board')) {
+                board = JSON.parse(localStorage.getItem('board'));
+                score = parseInt(localStorage.getItem('score'));
+                for (let r = 0; r < rows; r++) {
+                    for (let c = 0; c < columns; c++) {
+                        let tile = document.getElementById(r.toString() + "-" + c.toString());
+                        let num = board[r][c];
+                        updateTile(tile, num);
+                    }
+                }
+                document.getElementById("score").innerText = score;
+            }
+        }
+
+        // Call this function whenever the game state changes (e.g., after a move)
+        function updateGameState() {
+            saveGame();
+        }
+
+        // Function to reset the game state
+        function resetGame() {
+            score = 0;
+            board = getDefaultBoard(); // Reset the board to its initial state
+
+            // Reset the board UI
+            for (let r = 0; r < rows; r++) {
+                for (let c = 0; c < columns; c++) {
+                    let tile = document.getElementById(r.toString() + "-" + c.toString());
+                    let num = board[r][c];
+                    updateTile(tile, num);
+                }
+            }
+
+            // Save the reset game state
+            updateGameState();
+            document.getElementById("score").innerText = score;
+        }
+
+        // Function to get the default (initial) game board
+        function getDefaultBoard() {
+            return [
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0],
+                [0, 0, 0, 0]
+            ];
+        }
